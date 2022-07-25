@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,6 +9,8 @@ import {
 } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../utils/Firebase";
 
 import {
   BellIcon,
@@ -17,6 +20,7 @@ import {
 } from "react-native-heroicons/outline";
 import Categories from "../components/Categories";
 import Card from "../components/Card";
+import { async } from "@firebase/util";
 
 const categories = [
   {
@@ -66,12 +70,34 @@ const foods = [
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [foods, setFoods] = useState();
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
+
+  const fetchData = async () => {
+    const colRef = collection(db, "foods");
+    await getDocs(colRef)
+      .then((snapshot) => {
+        let datas = [];
+        snapshot.docs.forEach((doc) => {
+          datas.push({ ...doc.data(), id: doc.id });
+        });
+        setFoods(datas);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [foods]);
+
+  // console.log(foods);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#000000" }}>

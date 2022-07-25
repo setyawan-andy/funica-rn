@@ -19,7 +19,7 @@ const DetailScreen = ({ navigation, route }) => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="h-[280px] justify-center items-center">
-          <Image source={item.image} className="h-[220px] w-[220px]" />
+          <Image source={{ uri: item.image }} className="h-[220px] w-[220px]" />
         </View>
         <View className="px-[20px] pt-[40px] pb-[60px] bg-[#395B64] rounded-t-[40px]">
           <View className="flex-row justify-between items-center">

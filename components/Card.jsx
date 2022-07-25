@@ -23,7 +23,7 @@ const Card = ({ food, navigation }) => {
         style={{ width: widthContainer, elevation: 13 }}
       >
         <View className="items-center -top-[40px]">
-          <Image source={food.image} className="h-[120px] w-[120px]" />
+          <Image source={{ uri: food.image }} className="h-[120px] w-[120px]" />
         </View>
         <View className="mx-[20px]">
           <Text className="text-xl font-semibold">{food.name}</Text>
